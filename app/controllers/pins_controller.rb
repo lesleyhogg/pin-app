@@ -24,7 +24,7 @@ class PinsController < ApplicationController
       @pin.save
       redirect_to pin_path(@pin)
     else
-      @errors = pin.errors
+      @errors = @pin.errors
       render :new
     end
   end
@@ -41,7 +41,7 @@ class PinsController < ApplicationController
       @pin.save
       redirect_to pin_path(@pin)
     else
-      @errors = pin.errors
+      @errors = @pin.errors
       render :edit
     end
   end

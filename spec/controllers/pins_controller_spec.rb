@@ -49,17 +49,17 @@ RSpec.describe PinsController do
     end
 
     it 'responds with a redirect' do
-      post :create, pin: @pin_hash
+      post :create, params: {pin: @pin_hash}
       expect(response.redirect?).to be(true)
     end
 
     it 'creates a pin' do
-      post :create, pin: @pin_hash
+      post :create, params: {pin: @pin_hash}
       expect(Pin.find_by_slug("rails-wizard").present?).to be(true)
     end
 
     it 'redirects to the show view' do
-      post :create, pin: @pin_hash
+      post :create, params: {pin: @pin_hash}
       expect(response).to redirect_to(pin_url(assigns(:pin)))
     end
 
@@ -68,7 +68,7 @@ RSpec.describe PinsController do
       # delete the title from the @pin_hash in order
       # to test what happens with invalid parameters
       @pin_hash.delete(:title)
-      post :create, pin: @pin_hash
+      post :create, params: {pin: @pin_hash}
       expect(response).to render_template(:new)
     end
 
@@ -77,7 +77,7 @@ RSpec.describe PinsController do
       # delete the title from the @pin_hash in order
       # to test what happens with invalid parameters
       @pin_hash.delete(:title)
-      post :create, pin: @pin_hash
+      post :create, params: {pin: @pin_hash}
       expect(assigns[:errors].present?).to be(true)
     end
   end
@@ -85,23 +85,86 @@ RSpec.describe PinsController do
   describe "GET edit" do
     before(:each) do
       @pin = Pin.last
-      get :edit, :id => @pin.id
+      get :edit, params: {:id => @pin.id}
     end
 
     it 'responds with success' do
-      get :edit, id: @pin.id
+      get :edit, params: {id: @pin.id}
       expect(response.success?).to be(true)
     end
 
     it 'renders the edit template' do
-      get :edit, id: @pin.id
+      get :edit, params: {id: @pin.id}
       expect(response).to render_template(:edit)
     end
 
     it 'assigns an instance variable @pin to the Pin with the appropriate id' do
-      get :edit, id: @pin.id
+      get :edit, params: {id: @pin.id}
       expect(assigns(:pin)).to eq(Pin.last)
     end
   end
 
+  #PUT update test taken from https://github.com/tnataly/coder-pinterest/blob/ccd1232d3783debdc57b536525c0fa82289d4cc7/spec/controllers/pins_controller_spec.rb
+
+  describe "PUT update" do
+    before (:all) do
+      @pin = Pin.create(title: "Learn RUBY hard way",
+        url: "http://google.com",
+        text: "Some super text",
+        slug: "ruby-hard",
+        category_id: "ruby")
+    end
+
+    context "request to /pins with valid parameters" do
+    let(:attr) do
+      { :title => "Learn Rails",
+        :url => "New url",
+        :text => "The new text",
+        :slug => "ruby-hard"
+       }
+    end
+
+    before(:each) do
+      put :update, params: {:id => @pin.id, :pin => attr}
+      @pin.reload
+    end
+
+    it 'updates a pin' do
+      expect(@pin.title).to eql attr[:title]
+      expect(@pin.url).to eql attr[:url]
+      expect(@pin.text).to eql attr[:text]
+      expect(@pin.slug).to eql attr[:slug]
+      #puts "===================\n" + response.body
+    end
+
+    it 'redirects to the show view' do
+        expect(response).to redirect_to(pin_path(assigns(:pin)))
+    end
+    end
+
+    context "request to /pins with invalid parameters" do
+      let(:attr) do
+        { :title => "",
+          :url => "",
+          :text => "The new text",
+          :slug => "ruby-hard"
+         }
+      end
+
+      before(:each) do
+        put :update, params: {:id => @pin.id, :pin => attr}
+        @pin.reload
+      end
+
+      it "assigns an @errors instance variable" do
+        #puts "===================\n" + response.body
+        expect(assigns[:errors].present?).to be(true)
+      end
+
+      it "renders the edit view" do
+        #puts "===================\n" + response.body
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
 end
