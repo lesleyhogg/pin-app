@@ -1,3 +1,4 @@
+=begin
 Category.create(
   name: 'ruby',
   id: 1
@@ -10,7 +11,7 @@ Category.create(
   name: 'unknown',
   id: 0
   )
-
+=end
 
 Pin.create(
   title: 'Rails Tutorial',
