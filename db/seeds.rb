@@ -1,3 +1,17 @@
+Category.create(
+  name: 'ruby',
+  id: 1
+  )
+Category.create(
+  name: 'rails',
+  id: 2
+  )
+Category.create(
+  name: 'unknown',
+  id: 0
+  )
+
+
 Pin.create(
   title: 'Rails Tutorial',
   url: 'https://www.railstutorial.org/',

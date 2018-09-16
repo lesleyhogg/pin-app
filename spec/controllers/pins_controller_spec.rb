@@ -80,7 +80,28 @@ RSpec.describe PinsController do
       post :create, pin: @pin_hash
       expect(assigns[:errors].present?).to be(true)
     end
+  end
 
+  describe "GET edit" do
+    before(:each) do
+      @pin = Pin.last
+      get :edit, :id => @pin.id
+    end
+
+    it 'responds with success' do
+      get :edit, id: @pin.id
+      expect(response.success?).to be(true)
+    end
+
+    it 'renders the edit template' do
+      get :edit, id: @pin.id
+      expect(response).to render_template(:edit)
+    end
+
+    it 'assigns an instance variable @pin to the Pin with the appropriate id' do
+      get :edit, id: @pin.id
+      expect(assigns(:pin)).to eq(Pin.last)
+    end
   end
 
 end
