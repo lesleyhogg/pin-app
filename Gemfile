@@ -35,6 +35,13 @@ gem 'puma', '~> 3.11'
 gem 'rails_12factor'
 gem 'rails-controller-testing'
 
+# Handles file uploads
+gem 'paperclip'
+
+# image storage for Heroku
+gem 'aws-sdk', '< 2.0'
+gem 'aws-sdk-s3'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

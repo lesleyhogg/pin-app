@@ -10,6 +10,9 @@
         <div class="pin-container col-md-4">
           <div class="pin">
             <div class="pin-header row">
+              <div class="image-index col-xs-12">
+                <img src="<%= pin.image.url(:medium) %>" alt="Pin image">
+              </div>
               <div class="logo-thumbnail col-xs-3">
                 <% if "#{pin.category_id}" == "1" %>
                   <%= image_tag('ruby-logo-thumbnail.png') %>

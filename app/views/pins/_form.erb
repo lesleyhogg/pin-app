@@ -1,4 +1,4 @@
-<%= form_for @pin do |f| %>
+<%= form_for(@pin, multipart: true) do |f| %>
   <div class="form-group">
     <label for="pin_title">Title (e.g. Ruby Tutorial)</label>
     <%= f.text_field :title, class: "form-control" %>
@@ -22,6 +22,11 @@
   <div class="form-group">
     <label for="pin_text">Description</label>
     <%= f.text_area :text, class: "form-control", rows: "3" %>
+  </div>
+
+  <div class="form-group">
+    <label for="pin_image">Image</label>
+    <%= f.file_field :image %>
   </div>
 
   <div class="form-group">
