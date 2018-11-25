@@ -830,6 +830,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
+  aws-sdk-s3
   byebug
   coffee-rails (~> 4.2)
   database_cleaner
