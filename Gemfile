@@ -40,7 +40,6 @@ gem 'paperclip'
 
 # image storage for Heroku
 gem 'aws-sdk', '~> 2.3'
-# gem 'aws-sdk-s3'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
